@@ -33,9 +33,22 @@ Because this workaround depends on the host picker, other OpenCode versions show
 
 Tested live on Windows with OpenCode 2.2.5. Production path handling uses the official `opencode debug paths state` resolver; other operating systems and remote-server use have not been live-tested. Sidebar visibility and width remain controlled by OpenCode.
 
+## Install from npm
+
+Requires OpenCode 2.2.5. Add the package name to the `plugins` array in your global `~/.config/opencode/cli.json`, preserving existing settings and plugin entries:
+
+```json
+{
+  "$schema": "https://opencode.ai/v2/cli.json",
+  "plugins": ["opencode-model-quick-switch"]
+}
+```
+
+OpenCode installs package plugins through npm. Use `/reload` if the running TUI has not loaded it yet.
+
 ## Install from source
 
-Requires Bun and OpenCode 2.2.5. This project is not published to npm.
+Requires Bun and OpenCode 2.2.5. Use this method if you prefer a local checkout over the npm package.
 
 ```sh
 git clone https://github.com/thejohnd0e/opencode-model-quick-switch.git
@@ -88,4 +101,4 @@ Separate pre-publication live checks exercised six sidebar selections across pro
 
 ## License
 
-A redistribution license has not yet been selected. Public repository visibility does not by itself grant an open-source license.
+MIT © thejohnd0e, 2026. See [LICENSE](LICENSE).
