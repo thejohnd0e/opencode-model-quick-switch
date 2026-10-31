@@ -4,13 +4,7 @@
 
 Adds a compact **Recent models** section below the other sidebar blocks. It follows OpenCode's native Recent history rather than maintaining a separate list.
 
-```text
-Recent models
-● Current model
-  Provider A
-  Another recent model
-  Provider B
-```
+![Recent models sidebar with provider names and the current model highlighted](https://raw.githubusercontent.com/thejohnd0e/opencode-model-quick-switch/main/assets/recent-models-sidebar.png)
 
 ## Features
 
