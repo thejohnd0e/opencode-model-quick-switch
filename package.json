@@ -1,0 +1,18 @@
+{
+  "name": "opencode-model-quick-switch",
+  "version": "0.1.0",
+  "description": "One-click switching between native Recent models from the OpenCode V2 terminal sidebar",
+  "repository": { "type": "git", "url": "https://github.com/thejohnd0e/opencode-model-quick-switch.git" },
+  "homepage": "https://github.com/thejohnd0e/opencode-model-quick-switch#readme",
+  "private": true,
+  "type": "module",
+  "exports": { "./tui": "./dist/tui.js" },
+  "scripts": {
+    "test": "bun --conditions=browser test src",
+    "typecheck": "tsc --noEmit",
+    "build": "bun build src/tui.ts --target=bun --format=esm --external=@opencode/plugin/tui --external=@opentui/core --external=@opentui/solid --external=solid-js --outfile=dist/tui.js"
+  },
+  "dependencies": { "@opencode/plugin": "2.2.5" },
+  "peerDependencies": { "@opentui/core": ">=0.8.0", "@opentui/solid": ">=0.8.0", "solid-js": ">=1.9.12" },
+  "devDependencies": { "@types/bun": "latest", "typescript": "^5.5.0", "@opencode/theme": "2.2.5", "@opentui/core": "0.8.0", "@opentui/solid": "0.8.0", "solid-js": "1.9.12" }
+}
