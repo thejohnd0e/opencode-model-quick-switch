@@ -23,18 +23,24 @@
     "build": "bun build src/tui.ts --target=bun --format=esm --external=@opencode/plugin/tui --external=@opentui/core --external=@opentui/solid --external=solid-js --outfile=dist/tui.js",
     "prepublishOnly": "bun run build && bun run test && bun run typecheck"
   },
-  "dependencies": {
-    "@opencode/plugin": "2.2.5"
-  },
+  "dependencies": {},
   "peerDependencies": {
+    "@opencode/plugin": ">=2.2.5",
     "@opentui/core": ">=0.8.0",
     "@opentui/solid": ">=0.8.0",
     "solid-js": ">=1.9.12"
   },
+  "peerDependenciesMeta": {
+    "@opencode/plugin": { "optional": true },
+    "@opentui/core": { "optional": true },
+    "@opentui/solid": { "optional": true },
+    "solid-js": { "optional": true }
+  },
   "devDependencies": {
+    "@opencode/plugin": "2.2.6",
     "@types/bun": "latest",
     "typescript": "^5.5.0",
-    "@opencode/theme": "2.2.5",
+    "@opencode/theme": "2.2.6",
     "@opentui/core": "0.8.0",
     "@opentui/solid": "0.8.0",
     "solid-js": "1.9.12"

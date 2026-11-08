@@ -25,7 +25,13 @@ export async function activate(context: Context) {
   let disposed = false
   let stopWatching = () => {}
   let file: string | undefined
-  const supported = context.app.version === "2.2.5"
+  // Keep the picker workaround enabled across OpenCode patch/minor releases.
+  // Exact-version gating made the plugin stop working after every host update;
+  // instead, attempt the documented command sequence and surface a clear error
+  // if the host's picker no longer matches. Versions outside the tested set only
+  // produce a warning in the sidebar.
+  const testedVersions = new Set(["2.2.5", "2.2.6"])
+  const untestedVersion = !testedVersions.has(context.app.version)
   const models = () => context.data.location.model.list(context.location)
   const providers = () => context.data.location.provider.list(context.location) ?? []
   const rows = () => {
@@ -34,7 +40,6 @@ export async function activate(context: Context) {
   }
   const notify = (message: string) => context.ui.toast.show({ title: "Recent models", message, variant: "warning", duration: 4000 })
   const snapshot = async (): Promise<Snapshot> => {
-    if (!supported) throw new Error("This picker workaround is verified only on OpenCode 2.2.5. Use /models.")
     if (!file) throw new Error("Model history is not ready. Use /models.")
     const preferences = await readPreferences(file)
     const catalog = models()
@@ -88,7 +93,7 @@ export async function activate(context: Context) {
     render: () => mountSidebar({
       rows,
       current: () => context.ui.model.current(), busy,
-      status: () => !supported ? "Requires OpenCode 2.2.5" : history().error ??
+      status: () => untestedVersion ? `Untested on OpenCode ${context.app.version}` : history().error ??
         (!history().preferences || models() === undefined ? "Loading models…" : "ready"),
       theme: () => ({ text: context.theme.text.base, muted: context.theme.text.muted, selected: context.theme.text.formfield.selected }),
       select: (ref) => { void select(ref) }, open: openNative,
@@ -97,7 +102,7 @@ export async function activate(context: Context) {
   context.keymap.layer(() => ({
     commands: [{
       id: "recent-models.select", title: "Switch recent model", group: "Recent models",
-      palette: true, slash: { name: "recent-models" }, enabled: () => supported && !busy() && rows().length > 0,
+      palette: true, slash: { name: "recent-models" }, enabled: () => !busy() && rows().length > 0,
       run: async () => {
         if (context.keymap.mode.current() !== "base") return
         const current = context.ui.model.current()
