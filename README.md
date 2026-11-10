@@ -19,17 +19,17 @@ Adds a compact **Recent models** section below the other sidebar blocks. It foll
 
 ## Compatibility
 
-**Works on OpenCode 2.2.5 and 2.2.6; newer releases are tried automatically and show an "Untested" warning instead of being disabled.**
+**Requires OpenCode 2.2.5 or newer.** Newer versions are not blocked by a version check, but compatibility depends on the host picker and cannot be guaranteed.
 
 OpenCode's inspected public TUI API has no direct model setter or native Recent accessor. This plugin reads local native preferences and drives the existing model picker using its commands. All asynchronous checks finish before opening the picker; opening, navigation, confirmation and optional variant-dialog closure run synchronously. A native-picker-specific command must be present before navigation.
 
-Because this workaround depends on the host picker, other OpenCode versions show a warning and disable one-click switching until compatibility is verified. Do not remove the version guard without checking the host behavior.
+The picker commands and selected model are checked at runtime; if the picker changes, switching may fail and show an error.
 
 Tested live on Windows with OpenCode 2.2.6. Production path handling uses the official `opencode debug paths state` resolver; other operating systems and remote-server use have not been live-tested. Sidebar visibility and width remain controlled by OpenCode.
 
 ## Install from npm
 
-Requires OpenCode 2.2.6. Add the package name to the `plugins` array in your global `~/.config/opencode/cli.json`, preserving existing settings and plugin entries:
+Requires OpenCode 2.2.5+. Add the package name to the `plugins` array in your global `~/.config/opencode/cli.json`, preserving existing settings and plugin entries:
 
 ```json
 {
@@ -42,7 +42,7 @@ OpenCode installs package plugins through npm. Use `/reload` if the running TUI 
 
 ## Install from source
 
-Requires Bun and OpenCode 2.2.6. Use this method if you prefer a local checkout over the npm package.
+Requires Bun and OpenCode 2.2.5+. Use this method if you prefer a local checkout over the npm package.
 
 ```sh
 git clone https://github.com/thejohnd0e/opencode-model-quick-switch.git

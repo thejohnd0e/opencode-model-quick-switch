@@ -25,13 +25,6 @@ export async function activate(context: Context) {
   let disposed = false
   let stopWatching = () => {}
   let file: string | undefined
-  // Keep the picker workaround enabled across OpenCode patch/minor releases.
-  // Exact-version gating made the plugin stop working after every host update;
-  // instead, attempt the documented command sequence and surface a clear error
-  // if the host's picker no longer matches. Versions outside the tested set only
-  // produce a warning in the sidebar.
-  const testedVersions = new Set(["2.2.5", "2.2.6"])
-  const untestedVersion = !testedVersions.has(context.app.version)
   const models = () => context.data.location.model.list(context.location)
   const providers = () => context.data.location.provider.list(context.location) ?? []
   const rows = () => {
@@ -93,7 +86,7 @@ export async function activate(context: Context) {
     render: () => mountSidebar({
       rows,
       current: () => context.ui.model.current(), busy,
-      status: () => untestedVersion ? `Untested on OpenCode ${context.app.version}` : history().error ??
+      status: () => history().error ??
         (!history().preferences || models() === undefined ? "Loading models…" : "ready"),
       theme: () => ({ text: context.theme.text.base, muted: context.theme.text.muted, selected: context.theme.text.formfield.selected }),
       select: (ref) => { void select(ref) }, open: openNative,
